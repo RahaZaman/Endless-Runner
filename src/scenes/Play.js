@@ -10,15 +10,10 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.racetrack = this.add.tileSprite(0, 0, 600, 780, 'racetrack').setOrigin(0, 0);
+        this.racetrack = this.add.tileSprite(0, 0, 1200, 1560, 'racetrack').setOrigin(0, 0);
 
         // Scale the racetrack image to fit the game screen
-        this.racetrack.setScale(0.8, 0.8);
-        // this.racetrack.setScale(game.config.width, game.config.height);
-        // this.racetrack.setScale(game.config.width / this.racetrack.width, game.config.height / this.racetrack.height);
-
-        // teal rectangular box at the top
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize, 0x008080).setOrigin(0, 0);
+        this.racetrack.setScale(0.5, 0.5);
 
         // car 
         this.p1Car = new Car(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'blue-car').setOrigin(0.5, 0);
@@ -37,15 +32,15 @@ class Play extends Phaser.Scene {
 
         // displaying timer on screen
         // changes x and y values in order to have it displayed (play around with the numbers)
-        this.timerText = this.add.text(game.config.width - 100, 15, 'Time: 0s', stopwatchConfig);
+        // this.timerText = this.add.text(game.config.width - 100, 15, 'Time: 0s', stopwatchConfig);
 
         // callback function to update the timer every second
-        this.time.addEvent({
-            delay: 1000,  // 1000 milliseconds = 1 second
-            callback: this.updateTimer,
-            callbackScope: this,
-            loop: true
-        });
+        // this.time.addEvent({
+        //     delay: 1000,  // 1000 milliseconds = 1 second
+        //     callback: this.updateTimer,
+        //     callbackScope: this,
+        //     loop: true
+        // });
 
         // configuration for stopwatch in play scene
         let stopwatchConfig = {
@@ -58,18 +53,19 @@ class Play extends Phaser.Scene {
             top: 5,
             bottom: 5,
             },
-            fixedWidth: 0,
+            fixedWidth: 80,
         }
     }
 
     update() {
-        
+        // scrolling of background image (racetrack)
+        this.racetrack.tilePositionY -= 2;
     }
 
     // function that increments the timer and updates the displayed text
-    updateTimer() {
-        this.timer++;
-        this.timerText.setText('Time: ' + this.timer + 's');
-    }
+    // updateTimer() {
+    //     this.timer++;
+    //     this.timerText.setText('Time: ' + this.timer + 's');
+    // }
 
 }
