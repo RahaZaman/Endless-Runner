@@ -3,7 +3,7 @@ class Car extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame); 
 
-        this.moveSpeed = 2;     // pixels per frame
+        this.moveSpeed = 3;     // pixels per frame
     }
 
     update() {
