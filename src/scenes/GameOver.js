@@ -28,7 +28,7 @@ class GameOver extends Phaser.Scene {
 
         // show game over text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Game Over', gameoverConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Click Restart Button to restart game', gameoverConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2, 'Click Restart Button to Restart Game', gameoverConfig).setOrigin(0.5);
         // this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Your Time was: ' + this.timer, gameoverConfig).setOrigin(0.5);
         titleConfig.backgroundColor = '#FF0000';
         titleConfig.color = '#000';

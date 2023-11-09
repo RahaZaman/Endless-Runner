@@ -7,7 +7,7 @@ class Play extends Phaser.Scene {
         this.load.image('blue-car', './assets/img/blue-car.png');
         this.load.image('gray-car', './assets/img/gray-car.png');
         this.load.image('racetrack', './assets/img/racetrack.png');
-        this.load.image('traffic-cone', './assets/img/traffic-cone.png')
+        this.load.image('traffic-cone', './assets/img/traffic-cone.png');
     }
 
     create() {
@@ -17,11 +17,18 @@ class Play extends Phaser.Scene {
         this.racetrack.setScale(0.5, 0.5);
 
         // car 
-        this.p1Car = new Car(this, config.width/2, game.config.height - borderUISize - borderPadding, 'blue-car').setOrigin(0.5, 0);
-        // this.p1Car = new Car(this, 300, 0, 'blue-car').setOrigin(0.5, 0);
+        this.p1Car = new Car(this, this.racetrack.width/3.75, 650, 'blue-car').setOrigin(0.5, 0);
+
+        // adjusting the size of the car
+        this.p1Car.setScale(0.12, 0.12); 
 
         // traffic cone
-        
+        this.trafficCone = this.physics.add.sprite(170, this.randomY, 'traffic-cone');
+        // establishing hitbox 
+        this.trafficCone.setCircle(this.trafficCone.width/3, 300, 450); 
+
+        // setting the scale of the object
+        this.trafficCone.setScale(0.05, 0.05);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -29,36 +36,20 @@ class Play extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
+        // stopwatch 
+        
+        // this.stopwatch = update(time, delta); 
+
+        // displaying stopwatch in scene
 
         // gameOver flag
         this.gameOver = false;
 
-        // initializing the stopwatch to zero
-        // this.stopwatch = 0;
+        this.physics.add.collider(this.p1Car, this.trafficCone, (p1Car, trafficCone) => {
+            // stop the stopwatch
 
-        // Setting up the timer event 
-        // this.stopwatchEvent = this.time.addEvent({
-        //     delay: 1000, // 1000 milliseconds = 1 second
-        //     callback: updateGameStopwatch,
-        //     callbackScope: this,
-        //     loop: true,
-        // });
-
-        // function updateGameStopwatch() {
-        //     // Increment stopwatch by 1 second
-        //     this.stopwatch += 1;
-            
-        //     // Updating the displayed stopwatch text
-        //     this.stopwatchText.setText(this.stopwatch);
-            
-        //     // if (this.gameSeconds <= 0) {
-        //     //     this.gameOver = true; 
-        //     //     this.time.removeEvent(this.timerEvent);
-        //     // }
-        // }
-
-        // displaying stopwatch on screen
-        // this.stopwatchText = this.add.text(borderUISize + borderPadding*47, borderUISize + borderPadding*2, 'Time: ' + this.stopwatch + 's', stopwatchConfig);
+            this.gameOver = true;
+        })
 
         // configuration for stopwatch in play scene
         let stopwatchConfig = {
@@ -76,8 +67,29 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // if gameOver value is set to true switches to Game Over Scene
+        if (this.gameOver == true) {
+            this.scene.start('gameOverScene');
+        }
+
         // makes the racetrack move, updates the tile sprite
         this.racetrack.tilePositionY -= 3;
+
+        // Move the traffic cone down by increasing its Y position
+        this.trafficCone.y += 2;
+
+        // Array that stores x values for middle of the lanes
+        this.xSpawnPoint = [250, 335, 425, 170];
+        // to get random value from the array - index
+        this.xSpawnPointIndex = Phaser.Math.Between(0, 3); 
+
+        // Generate a random Y coordinate within the specified range
+        this.randomY = Phaser.Math.Between(25, 100);
+
+        // Conditions to reset the traffic cone to the top
+        if (this.trafficCone.y >= 780) {
+            this.trafficCone.setPosition(this.xSpawnPoint[this.xSpawnPointIndex], this.randomY);
+        }
 
         // updates car movement 
         this.p1Car.update();

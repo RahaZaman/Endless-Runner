@@ -46,6 +46,7 @@ class Title extends Phaser.Scene {
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Road Runner Rush', titleConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Press Start Button to Begin', titleConfig).setOrigin(0.5);
+        // add the following to the message: ', and Dodge Obstacles as they Come'
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Use Arrow Keys to Move Car', titleConfig).setOrigin(0.5);
         titleConfig.backgroundColor = '#FF0000';
         titleConfig.color = '#000';

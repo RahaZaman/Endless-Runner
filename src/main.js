@@ -5,7 +5,7 @@ Road Runner Rush
 Approximate hours spent on project: 
 
 Citations/Resources: 
-
+https://pixabay.com/music/search/racing/
 
 */
 
@@ -19,13 +19,13 @@ let config = {
     },
     physics: {
         default: 'arcade',
-        // arcade: {
-        //     debug: true,
-        //     gravity: {
-        //         x: 0,
-        //         y: 0
-        //     }
-        // }
+        arcade: {
+            debug: true,
+            gravity: {
+                x: 0,
+                y: 0
+            }
+        }
     },
     scene: [ Title, Play, GameOver ]
 }
