@@ -37,10 +37,24 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
         // stopwatch 
-        
-        // this.stopwatch = update(time, delta); 
+        this.stopwatchTime = 0;
 
-        // displaying stopwatch in scene
+        // Create a text object to display the stopwatch
+        // this.stopwatchText = this.add.text(680, 50, 'Time: ' + this.stopwatchTime + 's', stopwatchConfig).setOrigin(0, 0); 
+
+        // Create a timer event that triggers every second
+        this.time.addEvent({
+            delay: 1000,  // 1000 milliseconds = 1 second
+            callback: this.updateStopwatch,
+            callbackScope: this,
+            loop: true
+        });
+
+        // In your scene, define the callback function to update the stopwatch
+        // updateStopwatch() {
+        //     this.stopwatchTime += 1; // Increment the time by 1 second
+        //     this.stopwatchText.setText('Time: ' + this.stopwatchTime + 's'); // Update the displayed text
+        // }
 
         // gameOver flag
         this.gameOver = false;
