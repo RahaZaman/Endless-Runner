@@ -8,6 +8,12 @@ class Play extends Phaser.Scene {
         this.load.image('gray-car', './assets/img/gray-car.png');
         this.load.image('racetrack', './assets/img/racetrack.png');
         this.load.image('traffic-cone', './assets/img/traffic-cone.png');
+
+        // preloading car honking sounds
+        this.load.audio('car-honk1', './assets/audio/car-honk1.wav');
+        this.load.audio('car-honk2', './assets/audio/car-honk2.wav');
+        this.load.audio('car-honk3', './assets/audio/car-honk3.wav');
+        this.load.audio('car-honk4', './assets/audio/car-honk4.wav');
     }
 
     create() {
@@ -36,11 +42,53 @@ class Play extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
+        // define key for car horn/honk
+        keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+        keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+        keyJ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
+        keyK = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
+
+        // setting car sounds to the following objects
+        this.carSound1 = this.sound.add("car-honk1", { 
+            volume: 0.5, 
+            loop: false 
+        });
+
+        this.carSound2 = this.sound.add("car-honk2", { 
+            volume: 0.5, 
+            loop: false 
+        });
+
+        this.carSound3 = this.sound.add("car-honk3", { 
+            volume: 0.5, 
+            loop: false 
+        });
+
+        this.carSound4 = this.sound.add("car-honk4", { 
+            volume: 0.5, 
+            loop: false 
+        });
+
         // stopwatch 
         this.stopwatchTime = 0;
 
+         // configuration for stopwatch in play scene
+         let stopwatchConfig = {
+            fontFamily: 'Courier',
+            fontSize: '16px',
+            // backgroundColor: '#F8F9F9',
+            // color: '#FF0000',
+            color: '#8B0000',
+            align: 'center',
+            margin: {
+            top: 5,
+            bottom: 5,
+            },
+            fixedWidth: 0,
+        }
+
         // Create a text object to display the stopwatch
-        // this.stopwatchText = this.add.text(680, 50, 'Time: ' + this.stopwatchTime + 's', stopwatchConfig).setOrigin(0, 0); 
+        this.stopwatchText = this.add.text(510, 20, 'Time: ' + this.stopwatchTime + 's', stopwatchConfig).setOrigin(0, 0); 
 
         // Create a timer event that triggers every second
         this.time.addEvent({
@@ -50,42 +98,11 @@ class Play extends Phaser.Scene {
             loop: true
         });
 
-        // In your scene, define the callback function to update the stopwatch
-        // updateStopwatch() {
-        //     this.stopwatchTime += 1; // Increment the time by 1 second
-        //     this.stopwatchText.setText('Time: ' + this.stopwatchTime + 's'); // Update the displayed text
-        // }
-
         // gameOver flag
         this.gameOver = false;
-
-        this.physics.add.collider(this.p1Car, this.trafficCone, (p1Car, trafficCone) => {
-            // stop the stopwatch
-
-            this.gameOver = true;
-        })
-
-        // configuration for stopwatch in play scene
-        let stopwatchConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F8F9F9',
-            color: '#FF0000',
-            align: 'center',
-            margin: {
-            top: 5,
-            bottom: 5,
-            },
-            fixedWidth: 80,
-        }
     }
 
     update() {
-        // if gameOver value is set to true switches to Game Over Scene
-        if (this.gameOver == true) {
-            this.scene.start('gameOverScene');
-        }
-
         // makes the racetrack move, updates the tile sprite
         this.racetrack.tilePositionY -= 3;
 
@@ -105,8 +122,45 @@ class Play extends Phaser.Scene {
             this.trafficCone.setPosition(this.xSpawnPoint[this.xSpawnPointIndex], this.randomY);
         }
 
+        // checking collision between car and traffic cone
+        if (this.checkCollision(this.p1Car, this.trafficCone)) {
+            this.gameOver = true;
+        }
+
+        // if H key is pressed, plays car horn/honk
+        if (keyH.isDown) {
+            this.carSound1.play(); 
+        }
+        if (keyG.isDown) {
+            this.carSound2.play(); 
+        }
+        if (keyJ.isDown) {
+            this.carSound3.play(); 
+        }
+        if (keyK.isDown) {
+            this.carSound4.play(); 
+        }
+
         // updates car movement 
         this.p1Car.update();
+    }
+
+    // In your scene, define the callback function to update the stopwatch
+    updateStopwatch () {
+        this.stopwatchTime += 1; // Increment the time by 1 second
+        this.stopwatchText.setText('Time: ' + this.stopwatchTime + 's'); // Update the displayed text
+    }
+
+    checkCollision(car, trafficCone) {
+        // simple AABB checking
+        if (car.x < trafficCone.x + trafficCone.width && 
+            car.x + car.width > trafficCone.x && 
+            car.y < trafficCone.y + trafficCone.height &&
+            car.height + car.y > trafficCone. y) {
+                return true;
+        } else {
+            return false;
+        }
     }
 
 }

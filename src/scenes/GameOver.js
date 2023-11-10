@@ -24,14 +24,14 @@ class GameOver extends Phaser.Scene {
         this.restartText = this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2 + borderPadding*2, 'Restart', gameoverConfig).setOrigin(0.5);
 
         // "Return to Menu" 
-        this.returnMenu = this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2 + borderPadding*2, 'Return to Menu Page', titleConfig).setOrigin(0.5)
+        this.returnMenu = this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2 + borderPadding*2, 'Return to Menu Page', gameoverConfig).setOrigin(0.5)
 
         // show game over text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Game Over', gameoverConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Click Restart Button to Restart Game', gameoverConfig).setOrigin(0.5);
-        // this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Your Time was: ' + this.timer, gameoverConfig).setOrigin(0.5);
-        titleConfig.backgroundColor = '#FF0000';
-        titleConfig.color = '#000';
+        // this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Your Time was: ' + this, gameoverConfig).setOrigin(0.5);
+        gameoverConfig.backgroundColor = '#FF0000';
+        gameoverConfig.color = '#000';
     }
 
     update() {

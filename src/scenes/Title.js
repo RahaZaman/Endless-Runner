@@ -41,15 +41,36 @@ class Title extends Phaser.Scene {
         }
 
         // "Start" text to switch to play scene
-        this.startText = this.add.text(game.config.width/2, game.config.height/2 + borderUISize*2 + borderPadding*2, 'Start', titleConfig).setOrigin(0.5);
+        this.startText = this.add.text(game.config.width/2, game.config.height/1.5 + borderUISize*2 + borderPadding*2, 'Start', titleConfig).setOrigin(0.5);
 
         // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Road Runner Rush', titleConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Press Start Button to Begin', titleConfig).setOrigin(0.5);
-        // add the following to the message: ', and Dodge Obstacles as they Come'
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Use Arrow Keys to Move Car', titleConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/4 - borderUISize - borderPadding, 'Road Runner Rush', titleConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/3.95, 'Press Start Button to Begin', titleConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/3.85 + borderUISize + borderPadding, 'Use Arrow Keys to Move Car', titleConfig).setOrigin(0.5);
         titleConfig.backgroundColor = '#FF0000';
         titleConfig.color = '#000';
+        
+        // instruction configuration
+        let instructionConfig = {
+            fontFamily: 'Courier',
+            fontSize: '18px', 
+            color: '#FF0000',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+
+        // instruction text within title screen
+        this.add.text(125, 400, 'Movement Controls & Instructions', instructionConfig);
+        this.add.text(225, 425, '← to Move Left', instructionConfig); 
+        this.add.text(225, 450, '→ to Move Right', instructionConfig); 
+        this.add.text(225, 475, '↑ to Move Up', instructionConfig); 
+        this.add.text(225, 500, '↓ to Move Down', instructionConfig);
+        this.add.text(90, 525, 'Press H,G,J,K for a different Car Honks', instructionConfig);
+        this.add.text(125, 550, 'Dodge the incoming Traffic Cones', instructionConfig);
     }
 
     update() {
